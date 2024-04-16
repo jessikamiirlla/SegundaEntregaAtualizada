@@ -9,25 +9,32 @@ import so.schedule.Schedule;
 
 public class SystemOperation {
 	public static MemoryManager mm;
-	public static CpuManager cm;
 	public static Schedule schedule;
 	
-	public static Object systemCall(SystemCallType type, Process p, int sizeInMemory, String id) {
+	public static Process SystemCall(SystemCallType type, int sizeInMemory) {
 		if(type.equals(SystemCallType.CREATE_PROCESS)) {
 			if (Objects.isNull(mm)) {
-				mm = new MemoryManager(Strategy.BEST_FIT);
+				mm = new MemoryManager(256, 4);
 			}
-			if (Objects.isNull(cm)) {
-				cm = new CpuManager ();
+			if (Objects.isNull(schedule)) {
+				schedule = new FCFS();
+			}
+
+		}
+		return new Process(sizeInMemory);
+	}
 	
-			}
-			return new Process(sizeInMemory, id);
-		} else if (type.equals(SystemCallType.WRITE_PROCESS)) {
+	public static List<SubProcess> systemCall(SystemCallType type, Process p) {
+		
+		if (type.equals(SystemCallType.WRITE_PROCESS)) {
 			mm.write(p);
+			schedule.execute(p);
 			
-		} else if (type.equals(SystemCallType.DELETE_PROCESS)) {
+		} else if (type.equals(SystemCallType.CLOSE_PROCESS)) {
 			mm.delete(p);
+			schedule.finish(p);
 		} else if (type.equals(SystemCallType.READ_PROCESS)) {
+			return mm.read(p);
 			
 		}
 		return null;
