@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import so.memory.MemoryManager;
-import so.schedule.Lotery;
+import so.schedule.Priority;
 import so.schedule.Schedule;
 
 public class SystemOperation {
@@ -17,7 +17,10 @@ public class SystemOperation {
 				mm = new MemoryManager();
 			}
 			if (Objects.isNull(schedule)) {
-				schedule = new Lotery();
+				schedule = new Priority();
+				//schedule = new FCFS();
+				//schedule = new SJF();
+				//schedule = new Priority();
 			}
 
 		}

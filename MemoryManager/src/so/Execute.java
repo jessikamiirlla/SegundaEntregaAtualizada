@@ -5,21 +5,19 @@ public class Execute {
 		
 		//while vai aqui
 		
-		Process p1 = SystemOperation.SystemCall(SystemCallType.CREATE_PROCESS, 50, 10, 2);
+		Process p1 = SystemOperation.SystemCall(SystemCallType.CREATE_PROCESS, 130, 10, 0);
 		SystemOperation.systemCall(SystemCallType.WRITE_PROCESS, p1);
 		
 		System.out.println("\n***************************************************************************************************");
 		
-		Process p2 = SystemOperation.SystemCall(SystemCallType.CREATE_PROCESS, 100, 5, 3);
+		Process p2 = SystemOperation.SystemCall(SystemCallType.CREATE_PROCESS, 90, 20, 1);
 		SystemOperation.systemCall(SystemCallType.WRITE_PROCESS, p2);
 		
 		System.out.println("\n***************************************************************************************************");
 		
-		Process p3 = SystemOperation.SystemCall(SystemCallType.CREATE_PROCESS, 100, 15, 1);
+		Process p3 = SystemOperation.SystemCall(SystemCallType.CREATE_PROCESS, 30, 2, 1000);
 		SystemOperation.systemCall(SystemCallType.WRITE_PROCESS, p3);
 		
-		Process p4 = SystemOperation.SystemCall(SystemCallType.CREATE_PROCESS, 20, 15, 1);
-		SystemOperation.systemCall(SystemCallType.WRITE_PROCESS, p4);
 		
 		
 		

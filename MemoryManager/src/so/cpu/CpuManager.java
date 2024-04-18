@@ -9,7 +9,7 @@ import so.schedule.Schedule;
 public class CpuManager {
 	private Core[] cores;
 	private Schedule scheduler;
-
+	private boolean fim = false;
 	public static int INSTRUTIONS = 7;
 	public static int NUM_OF_CORES = 4;
 	public static int CLOCK = 500;
@@ -39,7 +39,7 @@ public class CpuManager {
 	}
 
 	private void executeProcesses() {
-		
+		boolean clocks = false;
 		if (this.cores != null) {
 			
 			for (Core core : this.cores) {
@@ -55,8 +55,11 @@ public class CpuManager {
 				
 			}
 			
+			clocks = true;
+			if (clocks && !fim) {
+				fim = true;
+			}
 			
-			System.out.println("----------------------------------------");
 		}
 	}
 
