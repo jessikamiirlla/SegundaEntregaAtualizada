@@ -2,48 +2,23 @@ package so.schedule;
 
 import so.cpu.CpuManager;
 import so.Process;
+import so.SubProcess;
 
 public abstract class Schedule {
 	public CpuManager cm;
-	
+
 	public Schedule() {
-		cm = new CpuManager();
+		cm = new CpuManager(this);
 	}
+
+	public abstract void addProcessAndSubProcess(Process p);
 	
-	public abstract void execute (Process p);
-	public abstract void finish (Process p);
+	public abstract void finish(Process p);
 
 	public CpuManager getCm() {
 		return cm;
 	}
-	
-	
-	
-}
-	
-	
-	
-	
-	
-	
-	
-	
-	//private CpuManager cpu;
-	
-	//public Schedule(int numberOfCores) {
-		//this.cpu = new CpuManager(numberOfCores);
-	//}
-	
-	//public CpuManager getCpu() {
-		//return cpu;
-	//}
-	
-	//public void setCpu(CpuManager cpu) {
-		//this.cpu = cpu;
-	//}
-	
-	//public abstract void execute (Process p);
-	
-	//public abstract voi finish (Process p);
 
-//}
+	public abstract SubProcess execute();
+
+}

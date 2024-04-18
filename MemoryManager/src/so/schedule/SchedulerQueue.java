@@ -1,60 +1,39 @@
 package so.schedule;
 
 import java.util.Comparator;
-import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
+import so.Process;
 
 import so.SubProcess;
+import so.SystemCallType;
 import so.SystemOperation;
-import so.cpu.Core;
 
-public class SchedulerQueue extends Schedule {
-	private PriorityQueue<Process> queue; 
-	private Hashtable<String, List<SubProcess>> SubProcesses;
-	
-	
+public abstract class SchedulerQueue extends Schedule {
+	protected PriorityQueue<Process> queue;
+	protected LinkedList<SubProcess> subProcesses;
+
 	public SchedulerQueue(Comparator<Process> comparator) {
 		this.queue = new PriorityQueue<>(comparator);
-		
-		
+		this.subProcesses = new LinkedList<SubProcess>();
+
 	}
-	public PriorityQueue<Process> getQueue() {
-		return queue;
-	}
-	
+
 	@Override
-	public void execute(Process p) {
-		List<SubProcess> sps = SystemOperation.SystemCall(SystemCallType.READ_PROCESS, p);
-		this.queue.add(p);
-		this.subProcesses.put(p.getId(), sps);
-		this.registerSubProcesses();
-		
-	}
-	
-	private void registerSubProcesses() {
-		//while() {
-		//bugado
-			
-		//}
-		Process p = this.queue.peek();
-		List<SubProcess> sps = this.subProcesses.get(p.getId());
-		
-		Core[] cores = this.getCm().getCores();
-		for (Core core: cores) {
-			if (core.getCurrentSubProcess() != null) {
-				SubProcess sp = sps.get(0);
-				this.getCm().registerProcess(core.getId(),sp);
-				
+	public void addProcessAndSubProcess(Process p) {
+		if (this.queue != null) {
+			this.queue.add(p);
+
+			List<SubProcess> subProcesses = SystemOperation.systemCall(SystemCallType.READ_PROCESS, p);
+
+			if (this.subProcesses != null) {
+				for (int i = 0; i < subProcesses.size(); i++) {
+					this.subProcesses.add(subProcesses.get(i));
+				}
 			}
-			
 		}
-		
+
 	}
-	
-	@Override
-	public void finish(Process p) {
-	
-	}	
 
 }
